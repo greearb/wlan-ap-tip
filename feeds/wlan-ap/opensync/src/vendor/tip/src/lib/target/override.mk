@@ -1,0 +1,5 @@
+ifeq ($(UNIT_NAME),$(filter $(GCC_MINOR),NM SM WM))
+UNIT_SRC_TOP += $(OVERRIDE_DIR)/src/entity.c
+endif
+UNIT_CFLAGS  += -I$(OVERRIDE_DIR)/inc
+UNIT_EXPORT_CFLAGS  := $(UNIT_CFLAGS)

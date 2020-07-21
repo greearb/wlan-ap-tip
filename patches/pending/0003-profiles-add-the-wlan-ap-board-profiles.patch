@@ -69,7 +69,7 @@ new file mode 100644
 index 0000000000..b5453c1151
 --- /dev/null
 +++ b/profiles/wlan-ap.yml
-@@ -0,0 +1,81 @@
+@@ -0,0 +1,82 @@
 +---
 +description: Add the wlan-ap dependencies
 +feeds:
@@ -118,6 +118,7 @@ index 0000000000..b5453c1151
 +  - luci-proto-ipv6
 +  - luci-proto-ppp
 +  - luci-theme-bootstrap
++  - nft-qos
 +  - openvswitch
 +  - openvswitch-common
 +  - openvswitch-libofproto

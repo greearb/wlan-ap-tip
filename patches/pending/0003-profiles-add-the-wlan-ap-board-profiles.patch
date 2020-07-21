@@ -69,7 +69,7 @@ new file mode 100644
 index 0000000000..b5453c1151
 --- /dev/null
 +++ b/profiles/wlan-ap.yml
-@@ -0,0 +1,82 @@
+@@ -0,0 +1,84 @@
 +---
 +description: Add the wlan-ap dependencies
 +feeds:
@@ -104,6 +104,7 @@ index 0000000000..b5453c1151
 +  - libunbound-light
 +  - libuuid
 +  - lua
++  - lldpd
 +  - luci
 +  - luci-app-firewall
 +  - luci-app-opkg
@@ -137,6 +138,7 @@ index 0000000000..b5453c1151
 +  - uuidgen
 +  - zlib
 +  - opensync
++  - wlan-ap-config
 +  - wpad-openssl
 +  - ip-bridge
 +

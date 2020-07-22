@@ -10,12 +10,12 @@ include $(INCLUDE_DIR)/kernel.mk
 
 PKG_NAME:=mac80211
 
-PKG_VERSION:=5.7-rc3-1
-PKG_RELEASE:=2
-PKG_SOURCE_URL:=@KERNEL/linux/kernel/projects/backports/stable/v5.7-rc3/
-PKG_HASH:=7bc785c932f011c65adb75ffa746be2fa90b16ab61a6e1fd883acee403ffeed1
+PKG_VERSION:=5.7.10-2
+PKG_RELEASE:=1
+PKG_SOURCE_URL:=http://www.candelatech.com/downloads/backports
+PKG_HASH:=1b33fea5e6c395de919773e7f9e62ef1370cd9aa2c2b45e97585cb3dfe878ae7
 
-PKG_SOURCE:=backports-$(PKG_VERSION).tar.xz
+PKG_SOURCE:=backports-$(PKG_VERSION).tar.gz
 PKG_BUILD_DIR:=$(KERNEL_BUILD_DIR)/backports-$(PKG_VERSION)
 PKG_BUILD_PARALLEL:=1
 

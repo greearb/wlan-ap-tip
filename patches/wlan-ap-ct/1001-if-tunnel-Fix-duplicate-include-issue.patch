@@ -1,0 +1,57 @@
+From 8862334547313f8a3901c9a021570c974009c5d1 Mon Sep 17 00:00:00 2001
+From: Ben Greear <greearb@candelatech.com>
+Date: Tue, 21 Jul 2020 15:07:08 -0700
+Subject: [PATCH 1/2] if-tunnel:  Fix duplicate include issue.
+
+So LANforge can compile (it needs to include if_tunnel, and also ip.h)
+
+Signed-off-by: Ben Greear <greearb@candelatech.com>
+---
+ ...api-linux-if_tunnel.h-include-linux-.patch | 35 +++++++++++++++++++
+ 1 file changed, 35 insertions(+)
+ create mode 100644 target/linux/ipq806x/patches-4.14/0271-Revert-include-uapi-linux-if_tunnel.h-include-linux-.patch
+
+diff --git a/target/linux/ipq806x/patches-4.14/0271-Revert-include-uapi-linux-if_tunnel.h-include-linux-.patch b/target/linux/ipq806x/patches-4.14/0271-Revert-include-uapi-linux-if_tunnel.h-include-linux-.patch
+new file mode 100644
+index 0000000000..dab87bcb28
+--- /dev/null
++++ b/target/linux/ipq806x/patches-4.14/0271-Revert-include-uapi-linux-if_tunnel.h-include-linux-.patch
+@@ -0,0 +1,35 @@
++From acc2497c6e1b7e5e24abd8beeab033052fb42070 Mon Sep 17 00:00:00 2001
++From: Ben Greear <greearb@candelatech.com>
++Date: Fri, 13 Jan 2017 11:14:46 -0800
++Subject: [PATCH 271/520] Revert "include/uapi/linux/if_tunnel.h: include
++ linux/if.h, linux/ip.h and linux/in6.h"
++
++This reverts commit 1fe8e0f074c77aa41aaa579345a9e675acbebfa9.
++
++This breaks my build since I include netinet/ip.h and that conflicts with linux/ip.h.
++
++Signed-off-by: Ben Greear <greearb@candelatech.com>
++---
++ include/uapi/linux/if_tunnel.h | 5 +----
++ 1 file changed, 1 insertion(+), 4 deletions(-)
++
++diff --git a/include/uapi/linux/if_tunnel.h b/include/uapi/linux/if_tunnel.h
++index 7d9105533c7b9..b78ac5b7a1db9 100644
++--- a/include/uapi/linux/if_tunnel.h
+++++ b/include/uapi/linux/if_tunnel.h
++@@ -3,11 +3,8 @@
++ #define _UAPI_IF_TUNNEL_H_
++ 
++ #include <linux/types.h>
++-#include <linux/if.h>
++-#include <linux/ip.h>
++-#include <linux/in6.h>
++ #include <asm/byteorder.h>
++-
+++#include <linux/if.h>
++ 
++ #define SIOCGETTUNNEL   (SIOCDEVPRIVATE + 0)
++ #define SIOCADDTUNNEL   (SIOCDEVPRIVATE + 1)
++-- 
++2.26.2
++
+-- 
+2.20.1
+

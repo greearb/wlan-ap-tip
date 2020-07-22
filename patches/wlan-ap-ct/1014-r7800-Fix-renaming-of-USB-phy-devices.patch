@@ -1,0 +1,50 @@
+From 85c12008d3a707f104f0f11f395e33a2ef913049 Mon Sep 17 00:00:00 2001
+From: Ben Greear <greearb@candelatech.com>
+Date: Wed, 14 Nov 2018 11:34:15 -0800
+Subject: [PATCH 14/22] r7800:  Fix renaming of USB phy devices.
+
+This allows one to name a USB phy persistently, based on
+the port it is plugged into.
+
+Signed-off-by: Ben Greear <greearb@candelatech.com>
+---
+ .../etc/hotplug.d/ieee80211/10_fix_wifi_mac          | 12 +++++++++++-
+ 1 file changed, 11 insertions(+), 1 deletion(-)
+
+diff --git a/target/linux/ipq806x/base-files/etc/hotplug.d/ieee80211/10_fix_wifi_mac b/target/linux/ipq806x/base-files/etc/hotplug.d/ieee80211/10_fix_wifi_mac
+index 0b1f6f8b01..f758be199e 100644
+--- a/target/linux/ipq806x/base-files/etc/hotplug.d/ieee80211/10_fix_wifi_mac
++++ b/target/linux/ipq806x/base-files/etc/hotplug.d/ieee80211/10_fix_wifi_mac
+@@ -34,18 +34,28 @@ esac
+ OPATH=${DEVPATH##/devices/platform/}
+ OPATH=${OPATH%%/ieee*}
+ 
++# For USB, OPATH looks like this at this point in this script:
++# soc/soc:usb30@0/11000000.dwc3/xhci-hcd.0.auto/usb1/1-1/1-1:1.0
++# But, the uci path has a platform/ prefix on that:
++# platform/soc/soc:usb30@0/11000000.dwc3/xhci-hcd.0.auto/usb1/1-1/1-1:1.0
++OPATH_USB="platform/$OPATH";
++
+ # 10 radios is enough for anyone!
++#echo "fix-wifi-mac, OPATH: $OPATH" >> /tmp/foo.txt
+ for i in `seq 0 9`;
+   do
+   BUS=`uci get wireless.@wifi-device[$i].path`
+-  if [ "$BUS " == "$OPATH " ]
++  #echo "fix-wifi-mac, BUS[$i]: $BUS" >> /tmp/foo.txt
++  if [ "$BUS " == "$OPATH " ] || [ "$BUS " == "$OPATH_USB " ]
+       then
+       PHYNAME=${DEVPATH##*ieee80211/}
+       NPHYNAME=`uci get wireless.@wifi-device[$i].phyname`
++      #echo "fix-wifi-mac, PHYNAME[$i]: $PHYNAME  NPHYNAME: $NPHYNAME" >> /tmp/foo.txt;
+       if [ "$NPHYNAME " != " " ]
+           then
+           if [ "$PHYNAME " != "$NPHYNAME " ]
+               then
++	      #echo "fix-wifi-mac, renaming..." >> /tmp/foo.txt;
+               iw $PHYNAME set name $NPHYNAME
+           fi
+       fi
+-- 
+2.20.1
+
